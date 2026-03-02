@@ -289,4 +289,38 @@ document.addEventListener('DOMContentLoaded', () => {
         srvStartTimer();
         window.addEventListener('resize', srvUpdate);
     }
+
+    // --- ACHIEVEMENT STATISTICS COUNTER ---
+    const statsSection = document.querySelector('.stats-container');
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    if (statsSection && statNumbers.length > 0) {
+        const obsOptions = { threshold: 0.3 };
+        const counterObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    statNumbers.forEach(stat => {
+                        const target = +stat.getAttribute('data-target');
+                        const speed = 100; // lower = faster duration
+
+                        let count = 0;
+                        const increment = target / speed;
+
+                        const updateCount = () => {
+                            if (count < target) {
+                                count += increment;
+                                stat.innerText = Math.ceil(count);
+                                setTimeout(updateCount, 20);
+                            } else {
+                                stat.innerText = target;
+                            }
+                        };
+                        updateCount();
+                    });
+                    counterObs.unobserve(entry.target);
+                }
+            });
+        }, obsOptions);
+        counterObs.observe(statsSection);
+    }
 });
