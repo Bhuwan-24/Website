@@ -1563,7 +1563,17 @@ textarea:focus {
 
 @media (min-width: 768px) {
     .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 3rem !important;
+        max-width: 900px !important;
+    }
+
+    .stats-grid .stat-card {
+        flex: 1 !important;
+        max-width: 400px !important;
+        margin: 0 !important;
     }
 }
 
@@ -1774,7 +1784,6 @@ textarea:focus {
     font-family: var(--font-body);
     color: var(--c-text-main);
     line-height: 1.8;
-    font-style: italic;
     position: relative;
     z-index: 1;
     font-size: 1rem;
